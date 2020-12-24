@@ -1,0 +1,40 @@
+env:
+  browser: true
+  es6: true
+  node: true
+extends:
+  - 'plugin:react/recommended'
+  - standard
+  - prettier
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 2018
+  sourceType: module
+plugins:
+  - react
+  - '@typescript-eslint'
+  - prettier
+  - react-hooks
+rules:
+  {
+    'space-before-function-paren': ['error', { 'anonymous': 'always', 'named': 'never', 'asyncArrow': 'always' }],
+    'no-unused-vars': 'off',
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
+    '@typescript-eslint/no-unused-expressions': ['error', { 'allowShortCircuit': true, 'allowTernary': false }],
+    'prettier/prettier': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/prop-types': ['off'],
+    'no-labels': 0
+  }
+ignorePatterns: ['dist/', 'lib/']
+settings:
+  react:
+    version: 'detect'
+  'import/core-modules': ['styled-jsx/css']
