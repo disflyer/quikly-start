@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "file-loader": "^6.2.0",
     "next": "^10.0.4",
     "postcss-100vh-fix": "^1.0.2",
@@ -16,10 +17,14 @@
     "postcss-preset-env": "^6.7.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "url-loader": "^4.1.1"
+    "react-use-scroll-position": "^2.0.0",
+    "swr": "^0.3.11",
+    "url-loader": "^4.1.1",
+    "use-clipboard-copy": "^0.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/preset-typescript": "^7.12.7",
     "@next/bundle-analyzer": "^10.0.4",
     "@types/node": "^14.14.16",
     "@types/react": "^17.0.0",

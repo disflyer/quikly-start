@@ -1,6 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
+import React from 'react'
+import { css } from 'linaria'
+import useSWR from 'swr'
+import axios from 'axios'
 
 export default function Home() {
-  return <div>next</div>
+  const { data } = useSWR('hello', async () => (await axios.get('/api/hello')).data)
+  console.debug(data)
+  return (
+    <div
+      className={css`
+        color: red;
+      `}
+    >
+      {data.name}
+    </div>
+  )
 }
