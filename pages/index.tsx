@@ -12,7 +12,7 @@ export default function Home() {
         color: red;
       `}
     >
-      {data.name}
+      {data?.name}
     </div>
   )
 }
