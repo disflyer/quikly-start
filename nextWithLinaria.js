@@ -27,16 +27,33 @@ module.exports = (nextConfig = {}) => {
     ...nextConfig,
     webpack(config, options) {
       traverse(config.module.rules)
+
       config.module.rules.push({
-        test: /\.(tsx|ts|js|mjs|jsx)$/,
+        test: /(?!_app)\.(tsx|ts|js|mjs|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
-            loader: require.resolve('linaria/loader'),
+            loader: require.resolve('@linaria/webpack-loader'),
             options: {
               sourceMap: process.env.NODE_ENV !== 'production',
               ...(nextConfig.linaria || {}),
               extension: LINARIA_EXTENSION
+            }
+          }
+        ]
+      })
+
+      // prevent global css error
+      config.module.rules.push({
+        test: /app\.(tsx|ts|js|mjs|jsx)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: require.resolve('@linaria/webpack-loader'),
+            options: {
+              sourceMap: process.env.NODE_ENV !== 'production',
+              ...(nextConfig.linaria || {}),
+              extension: '.css'
             }
           }
         ]

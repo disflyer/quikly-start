@@ -24,7 +24,7 @@ module.exports = function override(api) {
           'class-properties': {}
         }
       ],
-      'linaria/babel'
+      '@linaria'
     ],
     plugins
   }

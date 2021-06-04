@@ -5,10 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withSourceMaps = require('@zeit/next-source-maps')({
   devtool: 'hidden-source-map'
 })
-const path = require('path')
-const pkg = require('./package.json')
-
-const withCSS = require('@zeit/next-css')
 const withLinaria = require('./nextWithLinaria')
 const withImages = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
@@ -88,48 +84,47 @@ const withFonts = (nextConfig = {}) => {
   })
 }
 
-module.exports = withCSS(
-  withBundleAnalyzer(
-    withFonts(
-      withImages(
-        withSourceMaps(
-          withLinaria({
-            env: {
-              APP_ENV: process.env.APP_ENV
-            },
-            esModule: true,
-            // async redirects() {
-            //   return [
-            //     {
-            //       source: '/',
-            //       destination: '/',
-            //       permanent: false
-            //     }
-            //   ]
-            // },
-            // assetPrefix: isProd ? `https://static.codefuture.top/${pkg.keke.prefix}` : '',
-            inlineImageLimit: 1000,
-            webpack(config, options) {
-              const { dev } = options
-              if (dev) {
-                config.module.rules.push({
-                  test: /\.ts$/,
-                  exclude: /node_modules/,
-                  loader: 'eslint-loader'
-                })
-              }
-              config.resolve.alias['@'] = path.resolve(__dirname, '.')
-
+module.exports = withBundleAnalyzer(
+  withFonts(
+    withImages(
+      withSourceMaps(
+        withLinaria({
+          env: {
+            APP_ENV: process.env.APP_ENV
+          },
+          future: {
+            webpack5: true
+          },
+          esModule: true,
+          // async redirects() {
+          //   return [
+          //     {
+          //       source: '/',
+          //       destination: '/',
+          //       permanent: false
+          //     }
+          //   ]
+          // },
+          // assetPrefix: isProd ? `https://static.codefuture.top/${pkg.keke.prefix}` : '',
+          inlineImageLimit: 1000,
+          webpack(config, options) {
+            const { dev } = options
+            if (dev) {
               config.module.rules.push({
-                test: /\.js$/,
-                exclude: /[\\/]node_modules[\\/](?!(react-spring|react-hook-form)[\\/])/,
-                use: [options.defaultLoaders.babel]
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader'
               })
-
-              return config
             }
-          })
-        )
+            config.module.rules.push({
+              test: /\.js$/,
+              exclude: /[\\/]node_modules[\\/](?!(react-spring|react-hook-form)[\\/])/,
+              use: [options.defaultLoaders.babel]
+            })
+
+            return config
+          }
+        })
       )
     )
   )
